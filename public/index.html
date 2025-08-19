@@ -1,29 +1,36 @@
 <!DOCTYPE html>
 <html lang="ja">
   <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8">
-    <title>ようこそ、jigインターンへ！</title>
-    <link rel="icon" href="data:image/x-icon;,">
-    <style>
-      * {
-        box-sizing: border-box;
-        margin: 0;
-      }
-      html, body {
-        height: 100vh;
-        width: 100%;
-      }
-      body {
-        display: grid;
-        place-content: center;
-      }
-    </style>
-    <script type="module">
-      const message = await fetch("/welcome-message")
-      document.querySelector("body").innerHTML = `<h1>${await message.text()}</h1>`
-    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
+    <header>
+      <p>計画くん</p>
+      <div>
+        <a href="/">ホーム</a>
+        <a href="/plan.html">計画</a>
+      </div>
+    </header>
+    <main class="home">
+      <div>
+        
+      </div>
+      <div>
+        <p>目標を入力して計画を自動で作成</p>
+      </div>
+      <div>
+        <form id="submit">
+          <input type="text" id="plan">
+          <button class="submitButton" type="submit"">送信</button>
+        </form>
+      </div>
+    </main>
+    <footer>
+      <p>フッター</p>
+    </footer>
+    <script src="main.js" async></script>
   </body>
 </html>

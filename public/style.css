@@ -1,0 +1,90 @@
+* {
+  box-sizing: border-box;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  border-bottom: 2px black solid;
+}
+
+header > p {
+  margin-right: 12px;
+  font-size: x-large;
+  font-weight: bold;
+}
+
+.home div {
+  margin-bottom: 36px;
+}
+
+.home {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 24px;
+}
+
+input {
+  margin: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  border-radius: 0;
+  outline: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 200px;
+  height: 32px;
+  border: 2px black solid;
+  border-radius: 20px;
+}
+
+.home > div > p {
+  font-size: large;
+  font-weight: bold;
+}
+
+.card {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  max-width: 400px;
+  margin: 12px;
+  padding: 12px;
+  border: 2px black solid;
+  border-radius: 24px;
+}
+
+.card > p {
+  padding-left: 8px;
+  overflow: hidden;
+}
+
+footer {
+  position: absolute;
+  bottom: 0px;
+  border-top: 2px black solid;
+  width: 100%;
+}
+
+footer > p {
+  margin: 0;
+}
+
+.selectPlan {
+  display: flex;
+  align-items: center;
+}
+.selectPlan > select {
+  height: 40px;
+  margin-left: 24px;
+}
+
+.plan h1{
+  margin-left: 16px;
+}
