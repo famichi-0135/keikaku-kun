@@ -8,6 +8,10 @@ Deno.serve(async (req) => {
     return new Response("jigインターンへようこそ！");
   }
 
+  //post処理 DenoKV利用
+
+  //get処理
+
   return serveDir(req, {
     fsRoot: "public",
     urlRoot: "",

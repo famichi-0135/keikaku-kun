@@ -1,9 +1,14 @@
-globalThis.onload = () => {
-  const goal = new URL(
+globalThis.onload = (event) => {
+  const selectGoal = new URL(
     decodeURIComponent(document.location.href)
   ).searchParams.get("goal");
-  const plan = getPlan(goal);
+  console.log(selectGoal);
+  const plan = getPlan(selectGoal);
+  const goals = getGoals();
   createCard(plan);
+  appendPull(goals, selectGoal);
+  changeSelector();
+  // event.preventDefault();
 };
 
 function getPlan(params) {
@@ -14,8 +19,14 @@ function getPlan(params) {
     { title: "第四章を勉強する", deadline: "2025-08-27" },
     { title: "第五章を勉強する", deadline: "2025-08-28" },
   ];
-  console.log(params);
+
+  // console.log(params);
   return mockPlan;
+}
+
+function getGoals() {
+  const goalList = ["テスト", "筋トレ", "資格"];
+  return goalList;
 }
 
 function createCard(plan) {
@@ -31,4 +42,28 @@ function createCard(plan) {
     card.appendChild(pDeadline);
     cardDiv.appendChild(card);
   }
+}
+
+function appendPull(goals, selectGoal) {
+  const selector = document.getElementById("plan-select");
+  for (let i = 0; i < goals.length; i++) {
+    const option = document.createElement("option");
+    option.value = i;
+    option.innerHTML = goals[i];
+    //今選んでるやつにselectedを付ける
+    if (goals[i] === selectGoal) {
+      option.selected = true;
+    }
+    selector.appendChild(option);
+  }
+}
+
+function changeSelector() {
+  const selector = document.getElementById("plan-select");
+  selector.addEventListener("change", (event) => {
+    const selectGoal = event.target[event.target.value].text;
+    // console.log(selectGoal);
+
+    location.href = `/plan.html?goal=${selectGoal}`;
+  });
 }
