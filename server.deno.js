@@ -1,5 +1,5 @@
 import { serveDir } from "https://deno.land/std@0.224.0/http/file_server.ts";
-import { GoogleGenAI } from "npm:@google/genai@1.15.0";
+import { GoogleGenAI, Type } from "npm:@google/genai@1.15.0";
 
 const ai = new GoogleGenAI({});
 const kv = await Deno.openKv();
@@ -19,8 +19,30 @@ Deno.serve(async (req) => {
     console.log(prompt);
     const res = await ai.models.generateContent({
       model: "gemini-2.5-flash",
-      contents: `「${prompt}」の目標をもとにその目標を達成するための計画を作成して。絶対にjson以外は出力しないこと、コードブロック形式にもしないこと、形式としては[{title:string,deadline:yyyy-mm-dd}]の形でtitleには計画を出力すること、deadlineは最新の日時を調べてそこから始めること`,
+      contents:
+        `目標:[${prompt}]を達成するための今日から始める計画を生成してください。各計画には title と deadline を含め、deadline は yyyy-mm-dd 形式にしてください。`,
+      config: {
+        responseMimeType: "application/json",
+        responseSchema: {
+          type: Type.ARRAY,
+          items: {
+            type: Type.OBJECT,
+            properties: {
+              title: {
+                type: Type.STRING,
+              },
+              deadline: {
+                type: Type.STRING,
+                format: "date", // yyyy-mm-dd 形式を期待
+              },
+            },
+            propertyOrdering: ["title", "deadline"],
+            required: ["title", "deadline"],
+          },
+        },
+      },
     });
+
     const plan = res.text;
     console.log(plan);
     const result = await kv.set(["goal", `${prompt}`], {
@@ -40,7 +62,9 @@ Deno.serve(async (req) => {
       allPlan.push({ key: kv.key, value: kv.value });
     }
     console.log(allPlan);
-    return new Response(JSON.stringify(allPlan), { headers: {"Content-Type":"application/json"}});
+    return new Response(JSON.stringify(allPlan), {
+      headers: { "Content-Type": "application/json" },
+    });
   }
 
   return serveDir(req, {
