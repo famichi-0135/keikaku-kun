@@ -40,7 +40,7 @@ Deno.serve(async (req) => {
       allPlan.push({ key: kv.key, value: JSON.parse(kv.value) });
     }
     console.log(allPlan);
-    return Response.json(allPlan);
+    return new Response(JSON.stringify(allPlan), { headers: {"Content-Type":"application/json"}});
   }
 
   return serveDir(req, {
