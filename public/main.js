@@ -1,13 +1,13 @@
 //フォーム要素を取得
 const form = document.getElementById("submit");
 
-form.addEventListener("submit", (event) => {
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
   const goalInput = document.getElementById("plan");
   const goal = goalInput.value;
   console.log(goal);
   //サーバーに対してデータを送信する。
-  sendGoalData(goal);
+  await sendGoalData(goal);
   location.href = `/plan.html?goal=${goal}`;
 });
 
