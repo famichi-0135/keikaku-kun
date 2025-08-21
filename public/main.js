@@ -26,3 +26,13 @@ async function sendGoalData(goal) {
   console.log(plan);
   return plan;
 }
+
+// const planButton = document.getElementById("plan-button");
+// planButton.addEventListener("click", async (event) => {
+//   event.preventDefault();
+//   const res = await fetch("/get-plan");
+//   const allPlan = await res.json();
+//   const firstGoal = allPlan[0].key[1];
+//   console.log("計画ボタン"+firstGoal);
+//   location.href = `/plan.html?goal=${firstGoal}`;
+// });

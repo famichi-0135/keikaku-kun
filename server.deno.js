@@ -16,11 +16,14 @@ Deno.serve(async (req) => {
   if (req.method === "POST" && pathname === "/create-plan") {
     const body = await req.json();
     const prompt = body.prompt;
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+    const date = now.getDate();
     console.log(prompt);
     const res = await ai.models.generateContent({
       model: "gemini-2.5-flash",
-      contents:
-        `目標:[${prompt}]を達成するための今日から始める計画を生成してください。各計画には title と deadline を含め、deadline は yyyy-mm-dd 形式にしてください。`,
+      contents: `目標:[${prompt}]を達成するための${year}/${month}/${date}から始める計画を生成してください。各計画には title と deadline を含め、deadline は yyyy-mm-dd 形式にしてください。`,
       config: {
         responseMimeType: "application/json",
         responseSchema: {

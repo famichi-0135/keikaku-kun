@@ -11,7 +11,9 @@ globalThis.onload = async () => {
   await createCard(plan);
   appendPull(goals, selectGoal);
   changeSelector();
-  // event.preventDefault();
+  if (selectGoal === null) {
+    location.href = `/plan.html?goal=${encodeURIComponent(goals[0])}`;
+  }
 };
 
 async function getPlan(goal) {
@@ -71,8 +73,8 @@ function appendPull(goals, selectGoal) {
   const selector = document.getElementById("plan-select");
   for (let i = 0; i < goals.length; i++) {
     const option = document.createElement("option");
-    console.log(goals[i]);
-    console.log(selectGoal);
+    // console.log(goals[i]);
+    // console.log(selectGoal);
     option.value = i;
     option.innerHTML = goals[i];
     //今選んでるやつにselectedを付ける

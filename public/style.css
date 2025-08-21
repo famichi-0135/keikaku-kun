@@ -12,8 +12,25 @@ header {
 
 header > p {
   margin-right: 12px;
+  margin-left: 16px;
   font-size: x-large;
   font-weight: bold;
+}
+
+header > div a {
+  margin-right: 8px;
+  color: black;
+  border: 2px black solid;
+  text-decoration: none;
+  margin: 8px;
+  padding: 4px;
+  border-radius: 4px;
+}
+
+header > div a:hover {
+  background-color: black;
+  color: white;
+  transition: background-color;
 }
 
 .home div {
@@ -88,4 +105,32 @@ footer > p {
 
 .plan h1 {
   margin-left: 16px;
+}
+
+#plan-select {
+  border-radius: 12px;
+  border: 2px black solid;
+}
+
+#plan-select > option {
+  border-radius: 12px;
+  border: 2px black solid;
+}
+
+.submitButton {
+  border: 2px black solid;
+  border-radius: 4px;
+  background-color: white;
+  margin-left: 8px;
+}
+
+#submit {
+  display: flex;
+  align-items: center;
+}
+
+.submitButton:hover {
+  background-color: black;
+  color: white;
+  transition: background-color 0.3s;
 }
