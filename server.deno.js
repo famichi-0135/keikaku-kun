@@ -33,7 +33,7 @@ Deno.serve(async (req) => {
   //get処理
   if (req.method === "GET" && pathname === "/get-plan") {
     //DBから取り出す処理
-    const KvListIterator = await kv.list({ prefix: [] });
+    const KvListIterator = await kv.list({ prefix: ["goal"] });
     const allPlan = [];
     //jsonの配列にする処理
     for await (const kv of KvListIterator) {

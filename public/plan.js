@@ -1,14 +1,15 @@
-globalThis.onload = (event) => {
-  const selectGoal = new URL(
-    decodeURIComponent(document.location.href)
-  ).searchParams.get("goal");
+globalThis.onload = async () => {
+  const selectGoal = new URL(document.location.href).searchParams.get("goal");
   console.log(selectGoal);
-  const plan = getPlan(selectGoal);
+  // const escapeSelectGoal = decodeURIComponent(selectGoal);
+  //計画を取得
+  const plan = await getPlan(selectGoal);
   console.log("onloadのplan" + plan);
-  const goal = getGoals(selectGoal);
-  console.log("onloadのgoal" + plan);
-  createCard(plan);
-  appendPull(goal, selectGoal);
+  //目標を取得
+  const goals = await getGoals();
+  console.log("onloadのgoal" + goals);
+  await createCard(plan);
+  appendPull(goals, selectGoal);
   changeSelector();
   // event.preventDefault();
 };
@@ -22,18 +23,19 @@ async function getPlan(goal) {
   });
   const allPlan = await res.json();
   //Allplanから今のセレクターに選択されているGoalを同じplanを見つける処理
-  let correctPlan;
+  // let correctPlan;
   for (const plan of allPlan) {
     // console.log("Key:", plan.key, "Value:", plan.value);
     if (plan.key[1] === goal) {
-      correctPlan = plan.value.plan;
+      return plan.value.plan;
     }
   }
 
-  return correctPlan;
+  // console.log(correctPlan);
+  return [];
 }
 
-async function getGoals(goal) {
+async function getGoals() {
   // const goalList = ["テスト", "筋トレ", "資格"];
   // return goalList;
   const res = await fetch("get-plan", {
@@ -43,11 +45,11 @@ async function getGoals(goal) {
     },
   });
   const allPlan = await res.json();
+  const allGoals = [];
   for (const plan of allPlan) {
-    if (plan.key[1] === goal) {
-      return plan.key[1];
-    }
+    allGoals.push(plan.key[1]);
   }
+  return allGoals;
 }
 
 function createCard(plan) {
@@ -69,6 +71,8 @@ function appendPull(goals, selectGoal) {
   const selector = document.getElementById("plan-select");
   for (let i = 0; i < goals.length; i++) {
     const option = document.createElement("option");
+    console.log(goals[i]);
+    console.log(selectGoal);
     option.value = i;
     option.innerHTML = goals[i];
     //今選んでるやつにselectedを付ける
@@ -84,7 +88,7 @@ function changeSelector() {
   selector.addEventListener("change", (event) => {
     const selectGoal = event.target[event.target.value].text;
     // console.log(selectGoal);
-
-    location.href = `/plan.html?goal=${selectGoal}`;
+    const encodeSelectGoal = encodeURIComponent(selectGoal);
+    location.href = `/plan.html?goal=${encodeSelectGoal}`;
   });
 }
