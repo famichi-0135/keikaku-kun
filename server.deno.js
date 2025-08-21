@@ -37,7 +37,7 @@ Deno.serve(async (req) => {
     const allPlan = [];
     //jsonの配列にする処理
     for await (const kv of KvListIterator) {
-      allPlan.push({ key: kv.key, value: JSON.parse(kv.value) });
+      allPlan.push({ key: kv.key, value: kv.value });
     }
     console.log(allPlan);
     return new Response(JSON.stringify(allPlan), { headers: {"Content-Type":"application/json"}});
