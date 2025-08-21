@@ -13,5 +13,16 @@ form.addEventListener("submit", (event) => {
 
 async function sendGoalData(goal) {
   //後でサーバへのデータ送信処理を作る。
+  const res = await fetch("/create-plan", {
+    method: "POST",
+    body: JSON.stringify({
+      prompt: `${goal}`,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const plan = await res.json();
+  console.log(plan);
+  return plan;
 }
-

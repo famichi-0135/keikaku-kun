@@ -4,29 +4,50 @@ globalThis.onload = (event) => {
   ).searchParams.get("goal");
   console.log(selectGoal);
   const plan = getPlan(selectGoal);
-  const goals = getGoals();
+  console.log("onloadのplan" + plan);
+  const goal = getGoals(selectGoal);
+  console.log("onloadのgoal" + plan);
   createCard(plan);
-  appendPull(goals, selectGoal);
+  appendPull(goal, selectGoal);
   changeSelector();
   // event.preventDefault();
 };
 
-function getPlan(params) {
-  const mockPlan = [
-    { title: "第一章を勉強する", deadline: "2025-08-24" },
-    { title: "第二章を勉強する", deadline: "2025-08-25" },
-    { title: "第三章を勉強する", deadline: "2025-08-26" },
-    { title: "第四章を勉強する", deadline: "2025-08-27" },
-    { title: "第五章を勉強する", deadline: "2025-08-28" },
-  ];
+async function getPlan(goal) {
+  const res = await fetch("get-plan", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const allPlan = await res.json();
+  //Allplanから今のセレクターに選択されているGoalを同じplanを見つける処理
+  let correctPlan;
+  for (const plan of allPlan) {
+    // console.log("Key:", plan.key, "Value:", plan.value);
+    if (plan.key[1] === goal) {
+      correctPlan = plan.value.plan;
+    }
+  }
 
-  // console.log(params);
-  return mockPlan;
+  return correctPlan;
 }
 
-function getGoals() {
-  const goalList = ["テスト", "筋トレ", "資格"];
-  return goalList;
+async function getGoals(goal) {
+  // const goalList = ["テスト", "筋トレ", "資格"];
+  // return goalList;
+  const res = await fetch("get-plan", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  const allPlan = await res.json();
+  for (const plan of allPlan) {
+    if (plan.key[1] === goal) {
+      return plan.key[1];
+    }
+  }
 }
 
 function createCard(plan) {
