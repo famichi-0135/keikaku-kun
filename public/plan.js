@@ -57,14 +57,31 @@ async function getGoals() {
 function createCard(plan) {
   const cardDiv = document.getElementById("card");
   for (let i = 0; i < plan.length; i++) {
+    // const button = document.createElement("button");
+    // button.innerText = "X";
+    // button.id = `dBtnNum${i}`;
+    // button.classList.add('cardBtn');
     const card = document.createElement("div");
+    const titleCard = document.createElement("div");
+    const deadlineCard = document.createElement("div");
     card.id = `num${i}`;
+    titleCard.id = `titleNum${i}`;
+    deadlineCard.id = `deadlineNum${i}`;
     const pTitle = document.createElement("p");
     const pDeadline = document.createElement("p");
     pTitle.innerHTML = `${plan[i].title}`;
     pDeadline.innerHTML = `${plan[i].deadline}`;
-    card.appendChild(pTitle);
-    card.appendChild(pDeadline);
+    const pT = document.createElement("p");
+    const pD = document.createElement("p"); 
+    pT.innerHTML = "【計画】"
+    pD.innerHTML = "【期日】"
+    titleCard.appendChild(pT);
+    titleCard.appendChild(pTitle);
+    deadlineCard.appendChild(pD);
+    deadlineCard.appendChild(pDeadline);
+    // card.appendChild(button);
+    card.appendChild(titleCard);
+    card.appendChild(deadlineCard);
     cardDiv.appendChild(card);
   }
 }

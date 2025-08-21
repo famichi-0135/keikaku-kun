@@ -66,15 +66,16 @@ input {
   font-weight: bold;
 }
 
-#card div {
+#card > div {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  max-width: 400px;
+  /* max-width: 400px; */
   margin: 12px;
   padding: 12px;
   border: 2px black solid;
   border-radius: 24px;
+  margin-right: 16px;
 }
 
 #card > p {
@@ -145,4 +146,23 @@ footer > p {
   background-color: black;
   color: white;
   transition: background-color 0.3s;
+}
+
+#card div div {
+  /* display: flex;
+  flex-direction: column;
+  justify-content: start;  */
+  margin-right: 8px ;
+}
+
+.cardBtn{
+  width: 24px;
+  height: 24px;
+  align-self: center;
+  margin-right: 4px;
+  background-color: red;
+  border:0 ;
+  border-radius: 4px;
+  font-weight: bold;
+  color: white;
 }
