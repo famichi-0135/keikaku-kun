@@ -23,7 +23,9 @@ Deno.serve(async (req) => {
     });
     const plan = res.text;
     console.log(plan);
-    const result = await kv.set(["goal", `${prompt}`], { plan: `${plan}` });
+    const result = await kv.set(["goal", `${prompt}`], {
+      plan: JSON.parse(plan),
+    });
     // console.log(result);
     return new Response(plan);
   }
