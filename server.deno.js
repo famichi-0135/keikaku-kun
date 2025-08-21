@@ -12,7 +12,7 @@ Deno.serve(async (req) => {
     return new Response("jigインターンへようこそ！");
   }
 
-  //post処理 DenoKV利用
+  //post処理 aiからデータ取得 DenoKV利用
   if (req.method === "POST" && pathname === "/create-plan") {
     const body = await req.json();
     const prompt = body.prompt;
@@ -47,12 +47,39 @@ Deno.serve(async (req) => {
     });
 
     const plan = res.text;
-    console.log(plan);
+    // console.log(plan);
     const result = await kv.set(["goal", `${prompt}`], {
       plan: JSON.parse(plan),
     });
-    console.log(result);
+    // console.log(result);
     return new Response(plan);
+  }
+
+  //post 選択されたゴール、計画のインデックスのオブジェクトを削除
+  if (req.method === "POST" && pathname === "/delete-card") {
+    const body = await req.json();
+    const { goal, idx } = body;
+    console.log(goal, idx);
+    const currentData = await kv.get(["goal", goal]);
+    console.log(currentData);
+    currentData.value.plan.splice(idx, 1);
+    // const afterDelete = [];
+    // let i = 0;
+    // for await (const data of currentData) {
+    //   if (i === idx) {
+    //     i++;
+    //     continue;
+    //   }
+    //   console.log(kv.key);
+    //   afterDelete.push({ plan: kv.value });
+    //   i++;
+    // }
+    // console.log(afterDelete);
+    await kv.set(["goal", `${goal}`], { plan: currentData.value.plan });
+
+    return new Response(JSON.stringify(afterDelete), {
+      headers: { "Content-Type": "application/json" },
+    });
   }
 
   //get処理
@@ -64,7 +91,7 @@ Deno.serve(async (req) => {
     for await (const kv of KvListIterator) {
       allPlan.push({ key: kv.key, value: kv.value });
     }
-    console.log(allPlan);
+    // console.log(allPlan);
     return new Response(JSON.stringify(allPlan), {
       headers: { "Content-Type": "application/json" },
     });

@@ -57,10 +57,10 @@ async function getGoals() {
 function createCard(plan) {
   const cardDiv = document.getElementById("card");
   for (let i = 0; i < plan.length; i++) {
-    // const button = document.createElement("button");
-    // button.innerText = "X";
-    // button.id = `dBtnNum${i}`;
-    // button.classList.add('cardBtn');
+    const button = document.createElement("button");
+    button.innerText = "削除";
+    button.id = `${i}`;
+    button.classList.add("cardBtn");
     const card = document.createElement("div");
     const titleCard = document.createElement("div");
     const deadlineCard = document.createElement("div");
@@ -72,17 +72,38 @@ function createCard(plan) {
     pTitle.innerHTML = `${plan[i].title}`;
     pDeadline.innerHTML = `${plan[i].deadline}`;
     const pT = document.createElement("p");
-    const pD = document.createElement("p"); 
-    pT.innerHTML = "【計画】"
-    pD.innerHTML = "【期日】"
+    const pD = document.createElement("p");
+    pT.innerHTML = "【計画】";
+    pD.innerHTML = "【期日】";
     titleCard.appendChild(pT);
     titleCard.appendChild(pTitle);
     deadlineCard.appendChild(pD);
     deadlineCard.appendChild(pDeadline);
-    // card.appendChild(button);
+    deadlineCard.appendChild(button);
     card.appendChild(titleCard);
     card.appendChild(deadlineCard);
+    // card.appendChild(button);
     cardDiv.appendChild(card);
+
+    button.addEventListener("click", async () => {
+      const selectGoal = new URL(document.location.href).searchParams.get(
+        "goal"
+      );
+      const idx = button.id;
+      // console.log(idx, selectGoal);
+      await fetch("/delete-card", {
+        method: "POST",
+        body: JSON.stringify({
+          goal: `${selectGoal}`,
+          idx: idx,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const encodeSelectGoal = encodeURIComponent(selectGoal);
+      location.href = `/plan.html?goal=${encodeSelectGoal}`;
+    });
   }
 }
 
@@ -111,3 +132,13 @@ function changeSelector() {
     location.href = `/plan.html?goal=${encodeSelectGoal}`;
   });
 }
+
+// document.addEventListener("DOMContentLoaded", () => {
+//   const cardBtn = document.querySelectorAll(".cardBtn");
+//   cardBtn.addEventListener("click", (event) => {
+//     const selectGoal = new URL(document.location.href).searchParams.get("goal");
+//     console.log(selectGoal);
+//     const idx = cardBtn.id;
+//     console.log(idx, selectGoal);
+//   });
+// });
