@@ -208,7 +208,21 @@ footer > p {
 .selectPlan {
   display: flex;
   align-items: center;
+  justify-content: start;
+  width: 100%;
+
+  @media screen and (max-width: 768px) {
+    #plan-select {
+      width: 30%;
+    }
+  }
+  @media screen and (min-width: 769px) {
+    #plan-select {
+      width: 30%;
+    }
+  }
 }
+
 .selectPlan > select {
   height: 40px;
   margin-left: 24px;
@@ -257,6 +271,11 @@ footer > p {
   flex-direction: column;
   justify-content: start;  */
   margin-right: 8px;
+  
+  p {
+    font-size: large;
+    font-weight: bold;
+  }
 }
 
 .cardBtn {
@@ -275,8 +294,7 @@ footer > p {
   transition: background-color 0.3s;
 }
 
-body > main > #image{
+body > main > #image {
   width: 60%;
   height: 30%;
 }
-
