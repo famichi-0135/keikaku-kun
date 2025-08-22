@@ -66,7 +66,6 @@ Deno.serve(async (req) => {
     if (currentData.value.plan.length === 0) {
       console.log(currentData.value.plan.length);
       await kv.delete(["goal", `${goal}`]);
-      await kv.delete(["goal", "Javaを完全に理解したい"]);
     } else {
       await kv.set(["goal", `${goal}`], { plan: currentData.value.plan });
     }

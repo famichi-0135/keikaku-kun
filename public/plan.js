@@ -11,7 +11,7 @@ globalThis.onload = async () => {
   await createCard(plan, selectGoal);
   appendPull(goals, selectGoal, plan);
   changeSelector();
-  if (plan.length === 0) {
+  if (plan.length === 0 && goals.length !== 0) {
     location.href = `/plan.html?goal=${encodeURIComponent(goals[0])}`;
   }
 };
@@ -29,6 +29,7 @@ async function getPlan(goal) {
   for (const plan of allPlan) {
     // console.log("Key:", plan.key, "Value:", plan.value);
     if (plan.key[1] === goal) {
+      console.log(plan.value.plan);
       return plan.value.plan;
     }
   }
@@ -127,8 +128,6 @@ function appendPull(goals, selectGoal, plan) {
     if (goals[i] === selectGoal) {
       option.selected = true;
     }
-    // if (plan.length !== 0) {
-    // }
     selector.appendChild(option);
   }
 
