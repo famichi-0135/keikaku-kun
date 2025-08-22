@@ -147,13 +147,3 @@ function changeSelector() {
     location.href = `/plan.html?goal=${encodeSelectGoal}`;
   });
 }
-
-// document.addEventListener("DOMContentLoaded", () => {
-//   const cardBtn = document.querySelectorAll(".cardBtn");
-//   cardBtn.addEventListener("click", (event) => {
-//     const selectGoal = new URL(document.location.href).searchParams.get("goal");
-//     console.log(selectGoal);
-//     const idx = cardBtn.id;
-//     console.log(idx, selectGoal);
-//   });
-// });

@@ -1,31 +1,87 @@
+:root {
+  /* Tailwind Gray */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-200: #e5e7eb;
+  --gray-300: #d1d5db;
+  --gray-400: #9ca3af;
+  --gray-500: #6b7280;
+  --gray-600: #4b5563;
+  --gray-700: #374151;
+  --gray-800: #1f2937;
+  --gray-900: #111827;
+
+  /* Tailwind Blue */
+  --blue-50: #eff6ff;
+  --blue-100: #dbeafe;
+  --blue-200: #bfdbfe;
+  --blue-300: #93c5fd;
+  --blue-400: #60a5fa;
+  --blue-500: #3b82f6;
+  --blue-600: #2563eb;
+  --blue-700: #1d4ed8;
+  --blue-800: #1e40af;
+  --blue-900: #1e3a8a;
+}
+
 * {
   box-sizing: border-box;
+  /* background-color: var(--gray-50); */
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
 }
 
 header {
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 100%;
-  border-bottom: 2px black solid;
+  justify-content: space-between;
+  /* display: block; */
+  margin: 0;
+  border-bottom: 3px black solid;
+}
+
+header > div {
+  margin: 0 8px;
+  width: 250px;
+  height: 100%;
+  display: flex;
+  justify-content: end;
+  align-items: center;
 }
 
 header > p {
   margin-right: 12px;
+  color: var(--gray-800);
   margin-left: 16px;
-  font-size: x-large;
+  font-size: xx-large;
   font-weight: bold;
 }
 
 header > div a {
+  width: 100px;
+  height: 50px;
   margin-right: 8px;
   color: black;
+  font-size: large;
+  font-weight: bold;
   border: 2px black solid;
   text-decoration: none;
   margin: 8px;
   padding: 4px;
   border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
+
+/* header > div a p{
+  font-size: large;
+} */
 
 header > div a:hover {
   background-color: black;
@@ -37,12 +93,64 @@ header > div a:hover {
   margin-bottom: 36px;
 }
 
+.home .explain > p {
+  font-size: xx-large;
+  color: var(--gray-800);
+}
+
 .home {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin-top: 24px;
+}
+
+.home > #formDiv {
+  width: 60%;
+  height: 80px;
+  > #submit {
+    display: flex;
+    justify-content: start;
+    height: 100%;
+
+    > #plan {
+      width: 70%;
+      height: 70%;
+      margin-right: 5%;
+      font-size: large;
+      font-weight: bold;
+      background-color: var(--gray-100);
+    }
+    @media screen and (max-width: 768px) {
+      > .submitButton {
+        width: 25%;
+        height: 60%;
+        background-color: white;
+      }
+
+      .submitButton:hover {
+        background-color: var(--gray-900);
+        color: var(--gray-50);
+        transition: background-color 0.3s;
+      }
+    }
+    @media screen and (min-width: 769px) {
+      > .submitButton {
+        font-weight: bold;
+        font-size: medium;
+        width: 12%;
+        height: 55%;
+        background-color: white;
+      }
+
+      .submitButton:hover {
+        background-color: var(--gray-900);
+        color: var(--gray-50);
+        transition: background-color 0.3s;
+      }
+    }
+  }
 }
 
 input {
@@ -55,7 +163,7 @@ input {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  width: 200px;
+  width: 50%;
   height: 32px;
   border: 2px black solid;
   border-radius: 20px;
@@ -86,13 +194,15 @@ input {
 footer {
   position: fixed;
   bottom: 0px;
-  border-top: 2px black solid;
+  border-top: 3px black solid;
   width: 100%;
   background-color: white;
 }
 
 footer > p {
   margin: 0;
+  font-size: smaller;
+  color: var(--gray-700);
 }
 
 .selectPlan {
@@ -142,12 +252,6 @@ footer > p {
   align-items: center;
 }
 
-.submitButton:hover {
-  background-color: black;
-  color: white;
-  transition: background-color 0.3s;
-}
-
 #card div div {
   /* display: flex;
   flex-direction: column;
@@ -165,8 +269,14 @@ footer > p {
   font-size: medium;
 }
 
-.cardBtn:hover{
+.cardBtn:hover {
   color: white;
   background-color: rgb(227, 0, 0);
-  transition: background-color .3s;
+  transition: background-color 0.3s;
 }
+
+body > main > #image{
+  width: 60%;
+  height: 30%;
+}
+
