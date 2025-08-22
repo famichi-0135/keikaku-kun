@@ -8,10 +8,10 @@ globalThis.onload = async () => {
   //目標を取得
   const goals = await getGoals();
   console.log("onloadのgoal" + goals);
-  await createCard(plan);
-  appendPull(goals, selectGoal);
+  await createCard(plan, selectGoal);
+  appendPull(goals, selectGoal, plan);
   changeSelector();
-  if (selectGoal === null) {
+  if (plan.length === 0) {
     location.href = `/plan.html?goal=${encodeURIComponent(goals[0])}`;
   }
 };
@@ -38,8 +38,6 @@ async function getPlan(goal) {
 }
 
 async function getGoals() {
-  // const goalList = ["テスト", "筋トレ", "資格"];
-  // return goalList;
   const res = await fetch("get-plan", {
     method: "GET",
     headers: {
@@ -55,6 +53,10 @@ async function getGoals() {
 }
 
 function createCard(plan) {
+  // if (plan.length === 0) {
+  //   //計画が一つもない場合にセレクトから目標から消す処理
+  //   const selector = document.getElementById("plan-select");
+  // }
   const cardDiv = document.getElementById("card");
   for (let i = 0; i < plan.length; i++) {
     const button = document.createElement("button");
@@ -107,8 +109,14 @@ function createCard(plan) {
   }
 }
 
-function appendPull(goals, selectGoal) {
+function appendPull(goals, selectGoal, plan) {
   const selector = document.getElementById("plan-select");
+  while (selector.firstChild) {
+    selector.removeChild(selector.firstChild);
+  }
+  console.log(plan.length);
+  console.log(selectGoal);
+  console.log(goals);
   for (let i = 0; i < goals.length; i++) {
     const option = document.createElement("option");
     // console.log(goals[i]);
@@ -119,8 +127,16 @@ function appendPull(goals, selectGoal) {
     if (goals[i] === selectGoal) {
       option.selected = true;
     }
+    // if (plan.length !== 0) {
+    // }
     selector.appendChild(option);
   }
+
+  // else {
+  //   const encodeGoal = encodeURIComponent(goals[0]);
+  //   //ここでキー、ごとデータベースから削除する処理をする
+  //   location.href = `/plan.html?goal=${encodeGoal}`;
+  // }
 }
 
 function changeSelector() {

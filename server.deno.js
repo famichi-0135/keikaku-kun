@@ -63,21 +63,15 @@ Deno.serve(async (req) => {
     const currentData = await kv.get(["goal", goal]);
     console.log(currentData);
     currentData.value.plan.splice(idx, 1);
-    // const afterDelete = [];
-    // let i = 0;
-    // for await (const data of currentData) {
-    //   if (i === idx) {
-    //     i++;
-    //     continue;
-    //   }
-    //   console.log(kv.key);
-    //   afterDelete.push({ plan: kv.value });
-    //   i++;
-    // }
-    // console.log(afterDelete);
-    await kv.set(["goal", `${goal}`], { plan: currentData.value.plan });
+    if (currentData.value.plan.length === 0) {
+      console.log(currentData.value.plan.length);
+      await kv.delete(["goal", `${goal}`]);
+      await kv.delete(["goal", "Javaを完全に理解したい"]);
+    } else {
+      await kv.set(["goal", `${goal}`], { plan: currentData.value.plan });
+    }
 
-    return new Response(JSON.stringify(afterDelete), {
+    return new Response(JSON.stringify("success"), {
       headers: { "Content-Type": "application/json" },
     });
   }
